@@ -10,6 +10,9 @@ def add_media(dest, media):
 
     Only required for Django < 2.0
     """
+    if django.VERSION >= (2, 2):
+        dest._css_lists.extend(media._css_lists)
+        dest._js_lists.extend(media._js_lists)
     if django.VERSION >= (2, 0):
         combined = dest + media
         dest._css = combined._css
