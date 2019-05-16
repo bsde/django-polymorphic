@@ -19,7 +19,8 @@
  * Licensed under the New BSD License
  * See: http://www.opensource.org/licenses/bsd-license.php
  */
-(function($) {
+defer(function($) {
+    console.log("poly executed", $)
     'use strict';
     $.fn.polymorphicFormset = function(opts) {
         var options = $.extend({}, $.fn.polymorphicFormset.defaults, opts);
@@ -335,4 +336,15 @@
             }
         });
     });
-})(django.jQuery);
+});
+
+
+function defer(method) {
+    if (window.django.jQuery) {
+        console.log("defer success");
+        method(django.jQuery);
+    } else {
+        console.log("defer waiting");
+        setTimeout(function() { defer(method) }, 50);
+    }
+}
