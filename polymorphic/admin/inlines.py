@@ -143,8 +143,8 @@ class PolymorphicInlineModelAdmin(InlineModelAdmin):
         # whether to expose the scripts for filter_horizontal etc..
         # The admin helper exposes the inline + formset media.
         base_media = super(PolymorphicInlineModelAdmin, self).media
-        all_media = Media()
-        add_media(all_media, base_media)
+        all_media = Media(media=base_media)
+        # add_media(all_media, base_media)
 
         # Add all media of the child inline instances
         for child_instance in self.child_inline_instances:
@@ -152,9 +152,12 @@ class PolymorphicInlineModelAdmin(InlineModelAdmin):
 
             # Avoid adding the same media object again and again
             if child_media._css != base_media._css and child_media._js != base_media._js:
-                add_media(all_media, child_media)
+                all_media += child_media
+                #add_media(all_media, child_media)
 
-        add_media(all_media, self.polymorphic_media)
+
+        #add_media(all_media, self.polymorphic_media)
+        all_media += self.polymorphic_media
 
         return all_media
 
